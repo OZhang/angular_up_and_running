@@ -1,37 +1,51 @@
-import { Component, OnInit } from '@angular/core';
-import { Stock } from 'src/app/model/stock';
+import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy, OnChanges, OnDestroy, DoCheck, AfterViewInit, AfterContentInit, AfterContentChecked, AfterViewChecked } from '@angular/core';
+import { Stock } from '../../model/stock';
 
 @Component({
   selector: 'app-stock-item',
   templateUrl: './stock-item.component.html',
-  styleUrls: ['./stock-item.component.scss']
+  styleUrls: ['./stock-item.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Default,
 })
-export class StockItemComponent implements OnInit {
-  public stocks: Array<Stock>;
-  public stockStyles;
-  constructor() { }
+export class StockItemComponent implements OnInit, OnChanges, OnDestroy, DoCheck, AfterContentInit, AfterContentChecked,
+  AfterViewInit, AfterViewChecked {
+  @Input() public stock: Stock;
+  @Output() private toggleFavorite: EventEmitter<Stock>;
 
-  ngOnInit() {
-    this.stocks = [
-      new Stock('Test Stock Company', 'TSC', 85, 80),
-      new Stock('Second Stock Company', 'SSC', 10, 20),
-      new Stock('Last Stock Company', 'LSC', 876, 765),
-    ];
-    // let diff = (this.stock.price / this.stock.previousPrice) -1;
-    // let largeChange = Math.abs(diff) > 0.01;
-
-    // this.stockStyles = {
-    //   "color": this.stock.isPositiveChange() ?  "green" : "red",
-    //   "font-size": largeChange ? "1.2em" : "0.8em"
-    // };
+  constructor() {
+    this.toggleFavorite = new EventEmitter<Stock>();
   }
 
-  toggleFavorite(event, index) {
-    console.log('We are toggling the  favorite state for this stock', event);
-    this.stocks[index].favorite = !this.stocks[index].favorite;
+  ngOnInit(): void {
+    console.log('stock-item component - On Init');
+  }
+  ngOnChanges(changes: import("@angular/core").SimpleChanges): void {
+    console.log('stock-item component - On Changes');
+  }
+  ngOnDestroy(): void {
+    console.log('stock-item component - On Destory');
+  }
+  ngDoCheck(): void {
+    console.log('stock-item component - Do check');
+  }
+  ngAfterContentChecked(): void {
+    console.log('stock-item component - After Content Checked');
+  }
+  ngAfterContentInit(): void {
+    console.log('stock-item component - After Content Init');
+  }
+  ngAfterViewChecked(): void {
+    console.log('stock-item component - After View Checked');
+  }
+  ngAfterViewInit(): void {
+    console.log('stock-item component - After View Init');
   }
 
-  trackStockByCode(index, stock){
-    return stock.code;
+  onToggleFavorite(event) {
+    this.toggleFavorite.emit(this.stock);
+  }
+  
+  changeStockPrice() {
+    this.stock.price += 5;
   }
 }
