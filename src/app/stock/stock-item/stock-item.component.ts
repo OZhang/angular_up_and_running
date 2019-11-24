@@ -48,4 +48,8 @@ export class StockItemComponent implements OnInit, OnChanges, OnDestroy, DoCheck
   changeStockPrice() {
     this.stock.price += 5;
   }
+
+  testMethod() {
+    console.log('Test method in App')
+  }
 }

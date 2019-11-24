@@ -53,8 +53,4 @@ export class AppComponent implements OnInit, OnChanges, OnDestroy,
   changeStockPrice() {
     this.stock.price += 10;
   }
-
-  testMethod() {
-    console.log('Test method in App')
-  }
 }
